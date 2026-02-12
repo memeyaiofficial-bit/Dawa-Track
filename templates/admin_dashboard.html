@@ -1,0 +1,1198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - DawaTrack Hospital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================
+           GLOBAL STYLES & RESET
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        :root {
+            --primary: #0066CC;
+            --primary-dark: #0052A3;
+            --success: #28a745;
+            --warning: #ff9800;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --light: #f5f5f5;
+            --dark: #1a1a1a;
+            --gray: #7a7a7a;
+            --border: #e0e0e0;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           HEADER / NAVBAR
+           ============================================ */
+        .navbar {
+            height: 64px;
+            background: linear-gradient(135deg, var(--bg-white) 0%, #fafafa 100%);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .navbar-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-logo i {
+            font-size: 28px;
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .notification-bell:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger);
+            color: var(--bg-white);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--bg-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+            background-color: #fff5f5;
+        }
+
+        /* ============================================
+           SIDEBAR NAVIGATION
+           ============================================ */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .sidebar-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            text-transform: uppercase;
+            padding: 12px 24px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-item {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            height: 48px;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .sidebar-item.active {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            border-left-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-item i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* ============================================
+           MAIN CONTENT AREA
+           ============================================ */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+            background-color: var(--light);
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .content-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           STATS CARDS
+           ============================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card.success {
+            border-top-color: var(--success);
+        }
+
+        .stat-card.warning {
+            border-top-color: var(--warning);
+        }
+
+        .stat-card.danger {
+            border-top-color: var(--danger);
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card.primary .stat-icon {
+            color: var(--primary);
+        }
+
+        .stat-card.success .stat-icon {
+            color: var(--success);
+        }
+
+        .stat-card.warning .stat-icon {
+            color: var(--warning);
+        }
+
+        .stat-card.danger .stat-icon {
+            color: var(--danger);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 13px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        /* ============================================
+           SECTION TITLE
+           ============================================ */
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+            margin-top: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .title-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ============================================
+           CONTROLS / FILTERS
+           ============================================ */
+        .controls-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 40px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e3f2fd;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            min-height: 32px;
+        }
+
+        /* ============================================
+           TABLES
+           ============================================ */
+        .table-container {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: var(--light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        /* ============================================
+           BADGES / STATUS
+           ============================================ */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #e8f5e9;
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: #fff3e0;
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+
+        .badge-info {
+            background-color: #e0f2f1;
+            color: var(--info);
+        }
+
+        /* ============================================
+           SYSTEM STATUS
+           ============================================ */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .status-item {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .status-indicator.online {
+            background-color: #e8f5e9;
+            color: var(--success);
+        }
+
+        .status-indicator.offline {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+
+        .status-content {
+            flex: 1;
+        }
+
+        .status-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .status-info {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* ============================================
+           AUDIT LOG
+           ============================================ */
+        .log-item {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            transition: background-color 0.3s ease;
+        }
+
+        .log-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .log-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .log-icon.login {
+            background-color: #e3f2fd;
+            color: var(--primary);
+        }
+
+        .log-icon.create {
+            background-color: #e8f5e9;
+            color: var(--success);
+        }
+
+        .log-icon.delete {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+
+        .log-icon.modify {
+            background-color: #fff3e0;
+            color: var(--warning);
+        }
+
+        .log-content {
+            flex: 1;
+        }
+
+        .log-action {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .log-details {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .log-time {
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-content {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 8px 0;
+                display: none;
+            }
+
+            .sidebar.mobile-open {
+                display: block;
+                position: absolute;
+                z-index: 99;
+                width: 100%;
+                height: calc(100% - 64px);
+                overflow-y: auto;
+            }
+
+            .navbar {
+                padding: 0 16px;
+            }
+
+            .navbar-logo {
+                font-size: 18px;
+            }
+
+            .page-title {
+                display: none;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            td, th {
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .content-title {
+                font-size: 24px;
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .status-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            table {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="#" class="navbar-logo">
+                <i class="fas fa-hospital-user"></i>
+                DawaTrack
+            </a>
+            <div class="page-title">Admin Dashboard</div>
+        </div>
+
+        <div class="navbar-right">
+            <div class="notification-bell">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">2</span>
+            </div>
+
+            <div class="user-menu">
+                <div class="user-avatar">AD</div>
+                <div class="user-info">
+                    <div class="user-name">Admin User</div>
+                    <div class="user-role">System Administrator</div>
+                </div>
+            </div>
+
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-section-title">Dashboard</div>
+            <a href="#" class="sidebar-item active">
+                <i class="fas fa-tachometer-alt"></i> System Overview
+            </a>
+
+            <div class="sidebar-section-title">Management</div>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-users"></i> User Management
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-hospital-user"></i> Patient Data
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-prescription-bottle-medical"></i> Prescriptions
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-shield-alt"></i> Permissions
+            </a>
+
+            <div class="sidebar-section-title">Compliance</div>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-history"></i> Audit Logs
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-lock"></i> Security Settings
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-file-alt"></i> Reports
+            </a>
+
+            <div class="sidebar-section-title">Maintenance</div>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-tools"></i> System Settings
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-database"></i> Database
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-bell"></i> Alerts Config
+            </a>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <div class="content-header">
+                <h1 class="content-title">System Health Dashboard</h1>
+                <p class="content-subtitle">Monitor system performance, users, and compliance metrics</p>
+            </div>
+
+            <!-- SYSTEM STATUS CARDS -->
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-indicator online">✓</div>
+                    <div class="status-content">
+                        <div class="status-name">Database</div>
+                        <div class="status-info">Connected • 2.3 ms latency</div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-indicator online">✓</div>
+                    <div class="status-content">
+                        <div class="status-name">Redis Cache</div>
+                        <div class="status-info">Running • 98 connected clients</div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-indicator online">✓</div>
+                    <div class="status-content">
+                        <div class="status-name">Celery Workers</div>
+                        <div class="status-info">4 workers active • 123 tasks in queue</div>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-indicator online">✓</div>
+                    <div class="status-content">
+                        <div class="status-name">Africa's Talking API</div>
+                        <div class="status-info">Connected • Sandbox mode</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS CARDS -->
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-value">156</div>
+                    <div class="stat-change">↑ 12 this month</div>
+                </div>
+
+                <div class="stat-card success">
+                    <div class="stat-icon">
+                        <i class="fas fa-hospital-user"></i>
+                    </div>
+                    <div class="stat-label">Total Patients</div>
+                    <div class="stat-value">524</div>
+                    <div class="stat-change">↑ 48 this month</div>
+                </div>
+
+                <div class="stat-card danger">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-label">System Alerts</div>
+                    <div class="stat-value">2</div>
+                    <div class="stat-change">1 critical, 1 warning</div>
+                </div>
+
+                <div class="stat-card warning">
+                    <div class="stat-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="stat-label">Database Usage</div>
+                    <div class="stat-value">62%</div>
+                    <div class="stat-change">↓ 3% from yesterday</div>
+                </div>
+            </div>
+
+            <!-- USER MANAGEMENT SECTION -->
+            <section>
+                <div class="section-title">
+                    <div class="title-left">
+                        <i class="fas fa-users"></i> User Management
+                    </div>
+                </div>
+
+                <div class="controls-bar">
+                    <input type="text" class="search-box" placeholder="🔍 Search users by email or name...">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Add User
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Dr. Sarah</strong></td>
+                                <td>sarah@hospital.local</td>
+                                <td><span class="badge badge-info">Doctor</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>Today, 09:15 AM</td>
+                                <td>
+                                    <button class="btn btn-small">Edit</button>
+                                    <button class="btn btn-small">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nurse James</strong></td>
+                                <td>james@hospital.local</td>
+                                <td><span class="badge badge-success">Nurse</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>Today, 08:45 AM</td>
+                                <td>
+                                    <button class="btn btn-small">Edit</button>
+                                    <button class="btn btn-small">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin Maria</strong></td>
+                                <td>maria@hospital.local</td>
+                                <td><span class="badge badge-danger">Admin</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>Today, 10:30 AM</td>
+                                <td>
+                                    <button class="btn btn-small">Edit</button>
+                                    <button class="btn btn-small">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>John Patient</strong></td>
+                                <td>john.doe@email.com</td>
+                                <td><span class="badge badge-info">Patient</span></td>
+                                <td><span class="badge badge-warning">Inactive</span></td>
+                                <td>2 days ago</td>
+                                <td>
+                                    <button class="btn btn-small">Edit</button>
+                                    <button class="btn btn-small">Reactivate</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Emma Wilson</strong></td>
+                                <td>emma.w@email.com</td>
+                                <td><span class="badge badge-info">Patient</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>Today, 01:20 PM</td>
+                                <td>
+                                    <button class="btn btn-small">Edit</button>
+                                    <button class="btn btn-small">Suspend</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AUDIT LOG SECTION -->
+            <section>
+                <div class="section-title">
+                    <div class="title-left">
+                        <i class="fas fa-history"></i> Recent Activity & Audit Log
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div style="padding: 24px;">
+                        <!-- Login -->
+                        <div class="log-item">
+                            <div class="log-icon login">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">User Login</div>
+                                <div class="log-details">Dr. Sarah (sarah@hospital.local) logged in successfully</div>
+                                <div class="log-time">Today at 09:15:32 AM | IP: 192.168.1.45</div>
+                            </div>
+                        </div>
+
+                        <!-- Data Access -->
+                        <div class="log-item">
+                            <div class="log-icon login">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">Data Access</div>
+                                <div class="log-details">Dr. Sarah viewed patient profile: John Doe (ID: 524)</div>
+                                <div class="log-time">Today at 09:20:15 AM | IP: 192.168.1.45</div>
+                            </div>
+                        </div>
+
+                        <!-- Prescription Created -->
+                        <div class="log-item">
+                            <div class="log-icon create">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">Prescription Created</div>
+                                <div class="log-details">Dr. Sarah created new prescription for Mary Johnson (Amoxicillin 500mg)</div>
+                                <div class="log-time">Today at 09:30:45 AM | IP: 192.168.1.45</div>
+                            </div>
+                        </div>
+
+                        <!-- User Modified -->
+                        <div class="log-item">
+                            <div class="log-icon modify">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">User Modified</div>
+                                <div class="log-details">Admin Maria updated permissions for Nurse James (added palliative_care_access)</div>
+                                <div class="log-time">Today at 08:50:12 AM | IP: 192.168.1.50</div>
+                            </div>
+                        </div>
+
+                        <!-- Attachment Downloaded -->
+                        <div class="log-item">
+                            <div class="log-icon login">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">Report Downloaded</div>
+                                <div class="log-details">Admin Maria exported adherence report (January 2025)</div>
+                                <div class="log-time">Today at 10:15:20 AM | IP: 192.168.1.50</div>
+                            </div>
+                        </div>
+
+                        <!-- Password Change -->
+                        <div class="log-item">
+                            <div class="log-icon modify">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">Password Changed</div>
+                                <div class="log-details">Nurse James changed their password</div>
+                                <div class="log-time">Today at 07:30:00 AM | IP: 192.168.1.48</div>
+                            </div>
+                        </div>
+
+                        <!-- Failed Login -->
+                        <div class="log-item">
+                            <div class="log-icon delete">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">Failed Login Attempt</div>
+                                <div class="log-details">Invalid password attempt for account: test.user@hospital.local</div>
+                                <div class="log-time">Today at 06:45:33 AM | IP: 203.45.67.89</div>
+                            </div>
+                        </div>
+
+                        <!-- Delete -->
+                        <div class="log-item">
+                            <div class="log-icon delete">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                            <div class="log-content">
+                                <div class="log-action">Archived Record</div>
+                                <div class="log-details">Admin Maria archived old prescription records (90+ days inactive)</div>
+                                <div class="log-time">Yesterday at 11:20:00 PM | IP: 192.168.1.50</div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-list"></i> View Complete Audit Log
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPLIANCE SECTION -->
+            <section>
+                <div class="section-title">
+                    <div class="title-left">
+                        <i class="fas fa-clipboard-check"></i> Compliance & Security
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card success">
+                        <div class="stat-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="stat-label">HIPAA Compliance</div>
+                        <div class="stat-value">100%</div>
+                        <div class="stat-change">All checkboxes passed</div>
+                    </div>
+
+                    <div class="stat-card success">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-label">Data Encryption</div>
+                        <div class="stat-value">AES-256</div>
+                        <div class="stat-change">TLS 1.3 active</div>
+                    </div>
+
+                    <div class="stat-card success">
+                        <div class="stat-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="stat-label">Backup Status</div>
+                        <div class="stat-value">Daily</div>
+                        <div class="stat-change">Last: Today, 02:00 AM</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-icon">
+                            <i class="fas fa-update"></i>
+                        </div>
+                        <div class="stat-label">System Updates</div>
+                        <div class="stat-value">3 Available</div>
+                        <div class="stat-change negative">Review required</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER SPACING -->
+            <div style="margin-bottom: 32px;"></div>
+        </main>
+    </div>
+
+    <script>
+        // Search functionality
+        document.querySelector('.search-box').addEventListener('input', function(e) {
+            console.log('Searching for:', e.target.value);
+        });
+
+        // Button clicks
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Button clicked:', this.textContent);
+            });
+        });
+
+        // Notification bell
+        document.querySelector('.notification-bell').addEventListener('click', function() {
+            alert('You have 2 system alerts:\n1. Database usage approaching limit\n2. System update available');
+        });
+    </script>
+</body>
+</html>

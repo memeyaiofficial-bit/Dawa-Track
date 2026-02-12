@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DawaTrack UI Component Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        :root {
+            --primary: #0066CC;
+            --primary-dark: #0052A3;
+            --success: #28a745;
+            --warning: #ff9800;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --light: #f5f5f5;
+            --dark: #1a1a1a;
+            --gray: #7a7a7a;
+            --border: #e0e0e0;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        h1 i {
+            font-size: 40px;
+        }
+
+        .header-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .component-box {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .component-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            margin: 4px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e3f2fd;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #e68900;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            background-color: transparent;
+            color: var(--gray);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 18px;
+            min-height: 56px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+            min-height: 32px;
+        }
+
+        .buttons-demo {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        /* ============================================
+           BADGES & PILLS
+           ============================================ */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 4px;
+        }
+
+        .badge-primary {
+            background-color: #e3f2fd;
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: #e8f5e9;
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: #fff3e0;
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+
+        .badge-info {
+            background-color: #e0f2f1;
+            color: var(--info);
+        }
+
+        /* ============================================
+           ALERTS
+           ============================================ */
+        .alert {
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .alert-description {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-danger {
+            background-color: #ffebee;
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        .alert-warning {
+            background-color: #fff3e0;
+            color: var(--warning);
+            border-left: 4px solid var(--warning);
+        }
+
+        .alert-info {
+            background-color: #e0f2f1;
+            color: var(--info);
+            border-left: 4px solid var(--info);
+        }
+
+        /* ============================================
+           FORMS
+           ============================================ */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .form-control:disabled {
+            background-color: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .form-helper {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        .form-error {
+            color: var(--danger);
+            margin-top: 4px;
+            font-size: 12px;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* ============================================
+           CARDS
+           ============================================ */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 20px;
+            background-color: var(--light);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-footer {
+            padding: 20px;
+            background-color: var(--light);
+            border-top: 1px solid var(--border);
+            text-align: right;
+        }
+
+        .card-success {
+            border-left: 4px solid var(--success);
+        }
+
+        .card-danger {
+            border-left: 4px solid var(--danger);
+        }
+
+        .card-warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        .typography-demo {
+            display: grid;
+            gap: 16px;
+        }
+
+        .typo-item {
+            padding: 12px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .typo-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        h4 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        h5 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        h6 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .text-danger {
+            color: var(--danger);
+        }
+
+        .text-warning {
+            color: var(--warning);
+        }
+
+        .text-muted {
+            color: var(--gray);
+        }
+
+        /* ============================================
+           TABLES
+           ============================================ */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+
+        .table thead {
+            background-color: var(--light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: var(--dark);
+        }
+
+        .table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* ============================================
+           STATUS COLORS
+           ============================================ */
+        .status-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-dot.success {
+            background-color: var(--success);
+        }
+
+        .status-dot.danger {
+            background-color: var(--danger);
+        }
+
+        .status-dot.warning {
+            background-color: var(--warning);
+        }
+
+        .status-dot.info {
+            background-color: var(--info);
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .mb-1 { margin-bottom: 8px; }
+        .mb-2 { margin-bottom: 16px; }
+        .mb-3 { margin-bottom: 24px; }
+        .mb-4 { margin-bottom: 32px; }
+
+        .mt-1 { margin-top: 8px; }
+        .mt-2 { margin-top: 16px; }
+        .mt-3 { margin-top: 24px; }
+        .mt-4 { margin-top: 32px; }
+
+        .p-1 { padding: 8px; }
+        .p-2 { padding: 16px; }
+        .p-3 { padding: 24px; }
+        .p-4 { padding: 32px; }
+
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+
+        .d-flex { display: flex; }
+        .flex-wrap { flex-wrap: wrap; }
+        .gap-2 { gap: 16px; }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>
+                <i class="fas fa-palette"></i> DawaTrack UI Component Library
+            </h1>
+            <p class="header-subtitle">Hospital-grade, accessible, professional components for DawaTrack Healthcare System</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- BUTTONS SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-button"></i> Buttons
+            </h2>
+
+            <div class="subsection">
+                <h4 class="mb-2">Button Styles</h4>
+                <div class="buttons-demo">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-check"></i> Primary Button
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-edit"></i> Secondary Button
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i> Success Button
+                    </button>
+                    <button class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Danger Button
+                    </button>
+                    <button class="btn btn-warning">
+                        <i class="fas fa-exclamation-triangle"></i> Warning Button
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-link"></i> Outline Button
+                    </button>
+                    <button class="btn btn-disabled" disabled>
+                        <i class="fas fa-ban"></i> Disabled Button
+                    </button>
+                </div>
+            </div>
+
+            <div class="subsection mt-4">
+                <h4 class="mb-2">Button Sizes</h4>
+                <div class="buttons-demo">
+                    <button class="btn btn-primary btn-small">Small Button</button>
+                    <button class="btn btn-primary">Normal Button</button>
+                    <button class="btn btn-primary btn-large">Large Button</button>
+                </div>
+            </div>
+
+            <div class="subsection mt-4">
+                <h4 class="mb-2">Button with Icons</h4>
+                <div class="buttons-demo">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-warning">
+                        <i class="fas fa-clock"></i> Schedule
+                    </button>
+                    <button class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button class="btn btn-info" style="background-color: var(--info); color: white;">
+                        <i class="fas fa-info-circle"></i> Information
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BADGES SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-bookmark"></i> Badges & Status
+            </h2>
+
+            <div class="subsection mb-3">
+                <h4 class="mb-2">Badge Styles</h4>
+                <div>
+                    <span class="badge badge-primary">Primary</span>
+                    <span class="badge badge-success">Success</span>
+                    <span class="badge badge-danger">Danger</span>
+                    <span class="badge badge-warning">Warning</span>
+                    <span class="badge badge-info">Information</span>
+                </div>
+            </div>
+
+            <div class="subsection mb-3">
+                <h4 class="mb-2">Status Indicators</h4>
+                <div>
+                    <span><span class="status-dot success"></span> Active / Online</span><br>
+                    <span><span class="status-dot danger"></span> Error / Offline</span><br>
+                    <span><span class="status-dot warning"></span> Warning / Caution</span><br>
+                    <span><span class="status-dot info"></span> Info / Processing</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALERTS SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-exclamation-circle"></i> Alerts & Notifications
+            </h2>
+
+            <div class="alert alert-success">
+                <div class="alert-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <div class="alert-title">✓ Success Message</div>
+                    <div class="alert-description">Your prescription has been successfully created and confirmed.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger">
+                <div class="alert-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <div class="alert-title">⚠️ Error Message</div>
+                    <div class="alert-description">There was an error processing your request. Please try again or contact support.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="alert-content">
+                    <div class="alert-title">⚠️ Warning Message</div>
+                    <div class="alert-description">Patients adherence has dropped below 80%. Consider follow-up action.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <div class="alert-title">ℹ️ Information</div>
+                    <div class="alert-description">All system backups completed successfully at 02:00 AM.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMS SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-form"></i> Form Elements
+            </h2>
+
+            <div style="max-width: 500px;">
+                <div class="form-group">
+                    <label class="form-label">Patient Full Name *</label>
+                    <input type="text" class="form-control" placeholder="Enter patient's full name" value="John Doe">
+                    <div class="form-helper">This is the patient's registered legal name.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" class="form-control" placeholder="your.email@hospital.local" value="john@hospital.local">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Medication</label>
+                    <select class="form-control">
+                        <option>Amoxicillin 500mg</option>
+                        <option selected>Paracetamol 250mg</option>
+                        <option>Metformin 850mg</option>
+                        <option>Lisinopril 10mg</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Dosage Instructions</label>
+                    <textarea class="form-control" placeholder="Enter dosage instructions...">Take 1 tablet twice daily with meals</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Disabled Input</label>
+                    <input type="text" class="form-control" placeholder="This field is disabled" disabled value="Read-only value">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Input with Error</label>
+                    <input type="text" class="form-control" placeholder="Invalid input" style="border-color: var(--danger);">
+                    <div class="form-error">
+                        <i class="fas fa-exclamation-circle"></i> This field is required and cannot be empty.
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-save"></i> Submit
+                    </button>
+                    <button class="btn btn-outline" style="flex: 1;">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARDS SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-square"></i> Cards & Containers
+            </h2>
+
+            <div class="component-grid">
+                <div class="card">
+                    <div class="card-header">Patient Information</div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Age:</strong> 45 years</p>
+                        <p><strong>Care Type:</strong> Standard</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-small btn-primary">Edit</button>
+                    </div>
+                </div>
+
+                <div class="card card-success">
+                    <div class="card-header">✓ Adherence Status</div>
+                    <div class="card-body">
+                        <h3 class="text-success">92%</h3>
+                        <p>30-day adherence rate</p>
+                        <p class="text-muted">↑ 3% from last month</p>
+                    </div>
+                </div>
+
+                <div class="card card-danger">
+                    <div class="card-header">⚠️ Alert</div>
+                    <div class="card-body">
+                        <p class="text-danger"><strong>Missed Doses</strong></p>
+                        <p class="text-muted">2 missed doses in last 24 hours</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-small btn-danger">Review</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TYPOGRAPHY SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-font"></i> Typography
+            </h2>
+
+            <div class="typography-demo">
+                <div class="typo-item">
+                    <div class="typo-label">Heading 1 (H1) - 32px Bold</div>
+                    <h1>Welcome to DawaTrack Hospital System</h1>
+                </div>
+
+                <div class="typo-item">
+                    <div class="typo-label">Heading 2 (H2) - 24px Bold</div>
+                    <h2 style="border: none; padding: 0; margin: 0;">Patient Dashboard</h2>
+                </div>
+
+                <div class="typo-item">
+                    <div class="typo-label">Heading 3 (H3) - 20px Bold</div>
+                    <h3>Active Prescriptions</h3>
+                </div>
+
+                <div class="typo-item">
+                    <div class="typo-label">Body Text - 16px Regular</div>
+                    <p>This is standard body text used throughout the application. It should be easily readable even for elderly patients with vision difficulties. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+
+                <div class="typo-item">
+                    <div class="typo-label">Small Text - 14px Regular</div>
+                    <p style="font-size: 14px;">Small text is used for secondary information and helper text. It should maintain good contrast and readability.</p>
+                </div>
+
+                <div class="typo-item">
+                    <div class="typo-label">Text Variants</div>
+                    <p><span class="text-primary">Primary Text Color</span></p>
+                    <p><span class="text-success">Success Text Color</span></p>
+                    <p><span class="text-danger">Danger Text Color</span></p>
+                    <p><span class="text-warning">Warning Text Color</span></p>
+                    <p><span class="text-muted">Muted / Secondary Text</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLES SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-table"></i> Tables
+            </h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Adherence (30d)</th>
+                        <th>Last Check-in</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>John Doe</strong></td>
+                        <td>78%</td>
+                        <td>2 hours ago</td>
+                        <td><span class="badge badge-danger">Low</span></td>
+                        <td>
+                            <button class="btn btn-small btn-primary">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mary Johnson</strong></td>
+                        <td>92%</td>
+                        <td>4 hours ago</td>
+                        <td><span class="badge badge-success">Good</span></td>
+                        <td>
+                            <button class="btn btn-small btn-primary">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Robert Smith</strong></td>
+                        <td>88%</td>
+                        <td>1 day ago</td>
+                        <td><span class="badge badge-success">Good</span></td>
+                        <td>
+                            <button class="btn btn-small btn-primary">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- COLOR PALETTE SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-colors"></i> Color Palette
+            </h2>
+
+            <div class="component-grid">
+                <div class="component-box">
+                    <div class="component-label">Primary Blue</div>
+                    <div style="background-color: var(--primary); height: 80px; border-radius: 6px; margin-bottom: 12px;"></div>
+                    <code style="font-size: 12px;">#0066CC</code>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-label">Success Green</div>
+                    <div style="background-color: var(--success); height: 80px; border-radius: 6px; margin-bottom: 12px;"></div>
+                    <code style="font-size: 12px;">#28a745</code>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-label">Warning Orange</div>
+                    <div style="background-color: var(--warning); height: 80px; border-radius: 6px; margin-bottom: 12px;"></div>
+                    <code style="font-size: 12px;">#ff9800</code>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-label">Danger Red</div>
+                    <div style="background-color: var(--danger); height: 80px; border-radius: 6px; margin-bottom: 12px;"></div>
+                    <code style="font-size: 12px;">#dc3545</code>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-label">Info Teal</div>
+                    <div style="background-color: var(--info); height: 80px; border-radius: 6px; margin-bottom: 12px;"></div>
+                    <code style="font-size: 12px;">#17a2b8</code>
+                </div>
+
+                <div class="component-box">
+                    <div class="component-label">Light Gray</div>
+                    <div style="background-color: var(--light); height: 80px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;"></div>
+                    <code style="font-size: 12px;">#f5f5f5</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCESSIBILITY SECTION -->
+        <div class="section">
+            <h2>
+                <i class="fas fa-universal-access"></i> Accessibility Guidelines
+            </h2>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4>Font Sizes for Readability</h4>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li>H1 (Page Titles): 32px - Bold</li>
+                        <li>H2 (Section Titles): 24px - Bold</li>
+                        <li>Body Text: 16px minimum - Regular (Large for elderly patients)</li>
+                        <li>Labels: 14px - Regular</li>
+                        <li>Small Text: 12px - Regular (Use sparingly)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4>Color Contrast</h4>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li>Text on Background: Minimum 4.5:1 ratio (WCAG AA) ✓</li>
+                        <li>Large Text (18px+): Minimum 3:1 ratio ✓</li>
+                        <li>Interactive Elements: Clearly visible on focus</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4>Touch Targets & Usability</h4>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li>Minimum Button Height: 44px (mobile accessibility)</li>
+                        <li>Minimum Button Width: 120px</li>
+                        <li>Link Underlines: Present for clarity</li>
+                        <li>Form Labels: Always visible (not just placeholders)</li>
+                        <li>Icons + Text: Used together for clarity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Healthcare-Specific Design</h4>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li>Time Format: 24-hour (08:30 AM = 08:30) for medical accuracy</li>
+                        <li>Dates: ISO format (2025-02-09) or DD/MM/YYYY (09/02/2025)</li>
+                        <li>Medical Terminology: Consistent and clear</li>
+                        <li>Confirmation Dialogs: For critical actions (delete, prescribe, discharge)</li>
+                        <li>Status Indicators: Icons + text (not color alone)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer style="text-align: center; padding: 40px 0; color: var(--gray); border-top: 1px solid var(--border);">
+            <p>DawaTrack Hospital UI Component Library - Version 1.0</p>
+            <p style="font-size: 12px; margin-top: 8px;">Professional healthcare design system built for accessibility and usability</p>
+        </footer>
+    </div>
+</body>
+</html>
