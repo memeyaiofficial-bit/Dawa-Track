@@ -15,14 +15,12 @@ django-celery-results==2.5.1
 redis==5.0.1
 
 # Authentication & Security
-djangorestframework-simplejwt==5.3.2
+djangorestframework-simplejwt==5.3.1
 python-decouple==3.8
 bcrypt==4.1.1
-django-cors-headers==4.3.1
 
 # API Integration
 requests==2.31.0
-python-decouple==3.8
 
 # Email & Notifications
 django-anymail==10.1
@@ -40,7 +38,7 @@ pylint==3.0.3
 isort==5.13.2
 
 # Documentation
-drf-spectacular==0.56.2
+drf-spectacular==0.26.2
 django-filter==23.5
 
 # Monitoring & Logging
