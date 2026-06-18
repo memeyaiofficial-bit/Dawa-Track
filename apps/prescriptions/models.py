@@ -1,5 +1,6 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+# 1. Added MaxValueValidator to the import statement below
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from apps.users.models import User
 from apps.patients.models import Patient
@@ -123,7 +124,8 @@ class PrescriptionSchedule(models.Model):
     day_index = models.IntegerField(
         null=True,
         blank=True,
-        validators=[MinValueValidator(0), models.functions.Max(6)],
+        # 2. Replaced models.functions.Max(6) with MaxValueValidator(6) below
+        validators=[MinValueValidator(0), MaxValueValidator(6)],
         help_text='0-6 for days of week (0=Monday). Leave blank for daily.'
     )
     
@@ -242,14 +244,3 @@ class PrescriptionChange(models.Model):
     old_values = models.JSONField(default=dict, blank=True)
     new_values = models.JSONField(default=dict, blank=True)
     reason = models.TextField(blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        db_table = 'prescription_changes'
-        ordering = ['-timestamp']
-        indexes = [
-            models.Index(fields=['prescription', '-timestamp']),
-        ]
-    
-    def __str__(self):
-        return f"{self.prescription.drug_name} - {self.action} - {self.timestamp}"
