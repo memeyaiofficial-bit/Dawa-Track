@@ -6,7 +6,7 @@ Automatically logs key model events for audit trail.
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from apps.audit.models import AuditLog
+from apps.users.models import AuditLog
 
 User = get_user_model()
 

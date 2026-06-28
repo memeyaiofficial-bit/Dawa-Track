@@ -5,7 +5,6 @@ import logging
 from celery import shared_task
 from django.utils import timezone
 from datetime import timedelta
-from django.contrib.task_metadata import TaskMetadata
 from apps.reminders.models import Reminder, RemissionAlert
 from apps.prescriptions.models import DoseLog, Prescription
 from apps.patients.models import Patient
