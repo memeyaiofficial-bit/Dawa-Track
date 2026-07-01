@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: dawa-track-web
+    env: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: >-
+      bash -lc "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn dawatrack.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: dawatrack.settings
+
+  - type: worker
+    name: dawa-track-celery
+    env: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash -lc "celery -A dawatrack worker -l info"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: dawatrack.settings
+
+databases:
+  - name: dawa-track-db
+    plan: starter
+    engine: postgres
+
+caches:
+  - name: dawa-track-redis
+    plan: starter
+    type: redis
